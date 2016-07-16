@@ -1,5 +1,5 @@
 // Importing Twitter API keys
-var birdKeys = require('./keys.js');
+var twitterKeys = require('./keys.js');
 var fs = require('fs');
 // Request node package used for omdB function
 var request = require('request');
@@ -20,27 +20,6 @@ function liri(command, action){
 	}
 }
 
-//Twitter API Function
-function twitter() {
-
-// sets count to 20 tweets for my username
-  var params = {screen_name: '@Paul_Castro6',
-              tweetCount: 20
-  };  
-
-  getTwitter.get('statuses/user_timeline', params, function(error, tweets, response){
-    if (!error) {
-      var numTweets = tweets.length;
-        for (var j = 0; j < tweets.length; j++) {
-          // used j + 1 so that the counter starts at 1 instead of 0
-        console.log("Tweet #: " + [j + 1] + " " + tweets[j]['text'] + ". tweeted on " + 
-                    tweets[j]['created_at'] + '.' + '\n===============================================');
-        }
-      numTweets--;
-    }
-  });
-   
-};
 
 //Spotify API Function
 function spotify(song){
@@ -114,6 +93,7 @@ function omdB(movie){
 		});
 	}
 }
+
 // Executes function in random.txt file
 function doWhatISay(){
 	fs.readFile('./random.txt', 'utf8', function(error, data){
@@ -126,15 +106,28 @@ function doWhatISay(){
 	});
 };
 
-// Function to console.log results in Terminal and Append to Log.txt
-function log(data){
-	console.log(data);
-	fs.appendFile('assets/text-files/log.txt', data, 'utf8', function(error) {
-		if (error) {
-			console.log('Error occurred' + error);
-		}
-	})
+//Twitter API Function
+function twitter() {
+
+
+  var params = {screen_name: '@Paul_Castro6',
+              tweetCount: 20
+  };  
+
+  getTwitter.get('statuses/user_timeline', params, function(error, tweets, response){
+    if (!error) {
+      var numTweets = tweets.length;
+        for (var j = 0; j < tweets.length; j++) {
+          
+        console.log("Tweet #: " + [n + 1] + " " + tweets[n]['text'] + ". tweeted on " + 
+                    tweets[n]['created_at'] + '.' + '\n===============================================');
+        }
+      numTweets--;
+    }
+  });
+   
 };
+// I'll come back to this.
 
 // Execution of the liri function where process.argv[2] listens for the command and process.argv[3] is a user provided search term
 liri(process.argv[2], process.argv[3]);
